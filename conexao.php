@@ -10,5 +10,4 @@ try{
     echo "Erro ao conectar com banco de dados! <p>" .$e;
 }
 
-
 ?>
