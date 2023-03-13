@@ -41,7 +41,9 @@ require_once("../conexao.php");
                     <td><?php echo $res[$i]["senha"] ?></td>
                     <td><?php echo $res[$i]["nivel"] ?></td>
                     <td>
-                        <i class="bi bi-pencil-square text-primary"></i>
+                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=editar&id=<?php echo $res[$i]['id'] ?>">
+                            <i class="bi bi-pencil-square text-primary" title="Editar Registro"></i>
+                        </a>
                         <i class="bi bi-trash3 text-danger mx-2"></i>
                     </td>
                 </tr>
@@ -53,11 +55,29 @@ require_once("../conexao.php");
     } ?>
 </div>
 
+<?php
+if(@$_GET['funcao'] == "editar"){
+    $titulo_modal = "Editar registro";
+    $query = $pdo->query("SELECT * from usuarios WHERE id = '$_GET[id]'");
+    $res = $query->fetchAll(PDO::FETCH_ASSOC);
+    $total_reg = @count($res);
+    if($total_reg > 0){
+        $nome = $res[0]['nome'];
+        $cpf = $res[0]['cpf'];
+        $email = $res[0]['email'];
+        $senha = $res[0]['senha'];
+        $nivel = $res[0]['nivel'];
+    }
+}else{
+    $titulo_modal = "Inserir registro";
+}
+?>
+
 <div class="modal fade" tabindex="-1" id="modalCadastrar" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Inserir Registro</h5>
+                <h5 class="modal-title"><?php echo $titulo_modal ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="POST" id="form">
@@ -66,25 +86,25 @@ require_once("../conexao.php");
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Nome</label>
-                                <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" required="">
+                                <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" required="" value="<?php echo @$nome ?>">
                             </div>
                         </div>    
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">CPF</label>
-                                <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF" required="">
+                                <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF" required="" value="<?php echo @$cpf ?>">
                             </div>
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Email" required="">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Email" required="" value="<?php echo @$email ?>">
                     </div>
 
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Senha</label>
-                        <input type="text" class="form-control" name="senha" id="senha" placeholder="Senha" required="">
+                        <input type="text" class="form-control" name="senha" id="senha" placeholder="Senha" required="" value="<?php echo @$senha ?>">
                     </div>
 
                     <div class="mb-3">
@@ -107,6 +127,12 @@ require_once("../conexao.php");
                 <div class="modal-footer">
                     <button name="btn-fechar" id="btn-fechar" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                     <button name="btn-salvar" id="btn-salvar" type="submit" class="btn btn-primary">Salvar</button>
+
+                    <input name="id" type="hidden" value="<?php echo @$_GET['id'] ?>">
+
+                    <input name="antigo" type="hidden" value="<?php echo @$cpf ?>">
+
+                    <input name="antigo2" type="hidden" value="<?php echo @$email ?>">
                 </div>
             </form>
         </div>
@@ -116,6 +142,16 @@ require_once("../conexao.php");
 <?php
 
 if(@$_GET['funcao'] == 'novo'){ ?>
+    <script type="text/javascript">
+        var myModal = new bootstrap.Modal(
+            document.getElementById("modalCadastrar"));
+        myModal.show();
+    </script>
+<?php } ?>
+
+<?php
+
+if(@$_GET['funcao'] == 'editar'){ ?>
     <script type="text/javascript">
         var myModal = new bootstrap.Modal(
             document.getElementById("modalCadastrar"));
@@ -144,7 +180,7 @@ if(@$_GET['funcao'] == 'novo'){ ?>
                     //$('#nome').val('');
                     //$('#cpf').val('');
                     $('#btn-fechar').click();
-                    //window.location = "index.php?pag="+pag;
+                    window.location = "index.php?pagina="+pag;
 
                 } else {
 
