@@ -1,6 +1,7 @@
 <?php
 
 require_once("../config.php");
+@session_start();
 // VARIAVEIS DO MENU ADMINISTRATIVO
 $menu1 = "home";
 $menu2 = "usuarios";
