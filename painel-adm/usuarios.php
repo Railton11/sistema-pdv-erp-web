@@ -9,7 +9,7 @@ require_once("../conexao.php");
 <div class="mt-4">
     <?php
     // PERCORRER LISTA DE USUÁRIOS
-    $query = $pdo->query("SELECT * from usuarios");
+    $query = $pdo->query("SELECT * from usuarios order by id desc");
     $res = $query->fetchAll(PDO::FETCH_ASSOC);
     $total_reg = @count($res);
     if($total_reg > 0){ ?>
@@ -40,7 +40,10 @@ require_once("../conexao.php");
                     <td><?php echo $res[$i]["email"] ?></td>
                     <td><?php echo $res[$i]["senha"] ?></td>
                     <td><?php echo $res[$i]["nivel"] ?></td>
-                    <td></td>
+                    <td>
+                        <i class="bi bi-pencil-square text-primary"></i>
+                        <i class="bi bi-trash3 text-danger mx-2"></i>
+                    </td>
                 </tr>
                 <?php } ?>
             </tbody>
@@ -170,6 +173,8 @@ if(@$_GET['funcao'] == 'novo'){ ?>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#example').DataTable();
+        $('#example').DataTable({
+            "ordering": false
+        });
     });
 </script>
