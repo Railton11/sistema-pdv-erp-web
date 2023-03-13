@@ -1,5 +1,3 @@
 <?php
-
-echo "chegou";
-
+echo 'Chegou';
 ?>

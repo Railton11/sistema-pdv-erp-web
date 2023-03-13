@@ -1,6 +1,6 @@
 <?php
 
-$pag = "usuarios";
+$pag = 'usuarios';
 
 ?>
 <a class="btn btn-primary mt-2" href='index.php?pagina=<?php echo $pag ?>&funcao=novo' role="button">Novo Usuario</a>
@@ -43,23 +43,24 @@ $pag = "usuarios";
                         <label for="exampleFormControlInput1" class="form-label">Nível</label>
                         <select class="form-select mt-1" aria-label="Default select example" name="nivel">
 
-							<option <?php if(@$nivel == 'Administrador'){ ?> selected <?php } ?>  value="Administrador">Administrador</option>
-							
 							<option <?php if(@$nivel == 'Operador'){ ?> selected <?php } ?>  value="Operador">Operador</option>
+							
+                            <option <?php if(@$nivel == 'Administrador'){ ?> selected <?php } ?>  value="Administrador">Administrador</option>
 
 							<option <?php if(@$nivel == 'Tesoureiro'){ ?> selected <?php } ?>  value="Tesoureiro">Tesoureiro</option>
                         </select>
                         
                     </div>
-                    <small><div align="center" class="mt-1" id="mensagem">
+                    <div align="center" class="mt-1" id="mensagem">
 						
-					</div> </small>
+					</div>
+                </div>
+
+                <div class="modal-footer">
+                    <button name="btn-fechar" id="btn-fechar" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button name="btn-salvar" id="btn-salvar" type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </form>
-            <div class="modal-footer">
-                <button name="btn-fechar" id="btn-fechar" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                <button name="btn-salvar" id="btn-salvar" type="submit" class="btn btn-primary">Salvar</button>
-            </div>
         </div>
     </div>
 </div>
