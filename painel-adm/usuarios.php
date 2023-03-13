@@ -18,25 +18,25 @@ $pag = 'usuarios';
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Nome</label>
-                                <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome">
+                                <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" required="">
                             </div>
                         </div>    
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">CPF</label>
-                                <input type="text" class="form-control" name="CPF" id="CPF" placeholder="CPF">
+                                <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF" required="">
                             </div>
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Email" required="">
                     </div>
 
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Senha</label>
-                        <input type="text" class="form-control" name="senha" id="senha" placeholder="Senha">
+                        <input type="text" class="form-control" name="senha" id="senha" placeholder="Senha" required="">
                     </div>
 
                     <div class="mb-3">
