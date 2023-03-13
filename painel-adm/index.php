@@ -1,7 +1,9 @@
 <?php
 
-require_once("../config.php");
 @session_start();
+require_once("../config.php");
+require_once("verificar-permissao.php");
+
 // VARIAVEIS DO MENU ADMINISTRATIVO
 $menu1 = "home";
 $menu2 = "usuarios";
@@ -53,11 +55,11 @@ $menu2 = "usuarios";
                             <div class="btn-group">
                                 <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none; color: #363636;">
                                     <img src="../imagem/icone-usuario.png" width="49px" height="49px" alt="usuário padrão"/>
-                                    <font face="Verdana">Administrador</font>
+                                    <font face="Verdana"><?php echo $_SESSION['nome_usuario'];?></font>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-lg-end">
                                     <li><button class="dropdown-item" type="button">Editar Perfil</button></li>
-                                    <li><button class="dropdown-item" type="button">Sair</button></li>
+                                    <li><a class="dropdown-item" type="button" href="../logout.php">Sair</a></li>
                                 </ul>
                             </div>
                         </form>

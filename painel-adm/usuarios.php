@@ -2,6 +2,7 @@
 
 $pag = 'usuarios';
 require_once("../conexao.php");
+require_once("verificar-permissao.php");
 
 ?>
 <a class="btn btn-primary mt-2" href='index.php?pagina=<?php echo $pag ?>&funcao=novo' role="button">Novo Usuario</a>
