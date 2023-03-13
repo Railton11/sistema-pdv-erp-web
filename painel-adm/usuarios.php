@@ -44,7 +44,9 @@ require_once("../conexao.php");
                         <a href="index.php?pagina=<?php echo $pag ?>&funcao=editar&id=<?php echo $res[$i]['id'] ?>">
                             <i class="bi bi-pencil-square text-primary" title="Editar Registro"></i>
                         </a>
-                        <i class="bi bi-trash3 text-danger mx-2"></i>
+                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=deletar&id=<?php echo $res[$i]['id'] ?>">
+                            <i class="bi bi-trash3 text-danger mx-2" title="Excluir Registro"></i>
+                        </a>
                     </td>
                 </tr>
                 <?php } ?>
@@ -139,6 +141,32 @@ if(@$_GET['funcao'] == "editar"){
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" id="modalDeletar">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Excluir Registro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" id="form-excluir">
+                <div class="modal-body">
+                    <p>Deseja realmente excluir o registro?</p>
+                    <div align="center" class="mt-1" id="mensagem-deletar">
+						
+					</div>
+                </div>
+
+                <div class="modal-footer">
+                    <button name="btn-fechar-exluir" id="btn-fechar-exluir" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button name="btn-deletar" id="btn-deletar" type="submit" class="btn btn-danger">Excluir</button>
+
+                    <input name="id" type="hidden" value="<?php echo @$_GET['id'] ?>">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <?php
 
 if(@$_GET['funcao'] == 'novo'){ ?>
@@ -155,6 +183,16 @@ if(@$_GET['funcao'] == 'editar'){ ?>
     <script type="text/javascript">
         var myModal = new bootstrap.Modal(
             document.getElementById("modalCadastrar"));
+        myModal.show();
+    </script>
+<?php } ?>
+
+<?php
+
+if(@$_GET['funcao'] == 'deletar'){ ?>
+    <script type="text/javascript">
+        var myModal = new bootstrap.Modal(
+            document.getElementById("modalDeletar"));
         myModal.show();
     </script>
 <?php } ?>
@@ -205,6 +243,44 @@ if(@$_GET['funcao'] == 'editar'){ ?>
             }
         });
     });
+</script>
+
+<!--AJAX PARA EXCLUIR DADOS -->
+<script type="text/javascript">
+	$("#form-excluir").submit(function () {
+		var pag = "<?=$pag?>";
+		event.preventDefault();
+		var formData = new FormData(this);
+
+		$.ajax({
+			url: pag + "/excluir.php",
+			type: 'POST',
+			data: formData,
+
+			success: function (mensagem) {
+
+				$('#mensagem').removeClass()
+
+				if (mensagem.trim() == "Excluído com Sucesso!") {
+
+                    $('#btn-fechar-exluir').click();
+                    window.location = "index.php?pagina="+pag;
+
+                } else {
+
+                	$('#mensagem-deletar').addClass('text-danger')
+                }
+
+                $('#mensagem-deletar').text(mensagem)
+
+            },
+
+            cache: false,
+            contentType: false,
+            processData: false,
+            
+        });
+	});
 </script>
 
 <script type="text/javascript">
