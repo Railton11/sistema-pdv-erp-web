@@ -2,10 +2,11 @@
 require_once("conexao.php");
 ?>
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
     <head>
-        <meta charset="utf-8"/>
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title><?php echo $nome_sistema ?></title>
         <link rel="stylesheet" href="recurso/login/style.css">
     </head>
