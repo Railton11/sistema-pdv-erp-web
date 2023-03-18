@@ -260,7 +260,7 @@ if(@$_GET['funcao'] == 'deletar'){ ?>
 
 			success: function (mensagem) {
 
-				$('#mensagem').removeClass()
+				$('#mensagem-deletar').removeClass()
 
 				if (mensagem.trim() == "Excluído com Sucesso!") {
 

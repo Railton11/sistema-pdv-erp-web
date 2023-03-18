@@ -17,6 +17,7 @@ $query_con = $pdo->prepare("SELECT * from usuarios WHERE (email = :usuario or cp
         $_SESSION['nome_usuario'] = $res_con[0]['nome'];
         $_SESSION['nivel_usuario'] = $res_con[0]['nivel'];
         $_SESSION['cpf_usuario'] = $res_con[0]['cpf'];
+        $_SESSION['id_usuario'] = $res_con[0]['id'];
 
         if($nivel == 'Administrador'){
             echo "<script language='javascript'>window.location='painel-adm'</script>";
