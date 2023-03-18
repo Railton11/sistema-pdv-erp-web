@@ -7,6 +7,7 @@ require_once("verificar-permissao.php");
 // VARIAVEIS DO MENU ADMINISTRATIVO
 $menu1 = "home";
 $menu2 = "usuarios";
+$menu3 = "fornecedores";
 
 // RECUPERAR DADOS DO USUÁRIO
 $query = $pdo->query("SELECT * from usuarios WHERE id = '$_SESSION[id_usuario]'");
@@ -51,6 +52,9 @@ $id_usu = $res[0]['id'];
                             <li class="nav-item">
                                 <a class="nav-link" href="index.php?pagina=<?php echo $menu2 ?>">Usuários</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.php?pagina=<?php echo $menu3 ?>">Fornecedores</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Dropdown
@@ -89,6 +93,9 @@ $id_usu = $res[0]['id'];
                 }
                 else if(@$_GET['pagina'] == $menu2){
                     require_once($menu2. ".php");
+                }
+                else if(@$_GET['pagina'] == $menu3){
+                    require_once($menu3. ".php");
                 }
                 else{
                     require_once($menu1. ".php");
