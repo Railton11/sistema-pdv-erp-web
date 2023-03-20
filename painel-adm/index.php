@@ -8,6 +8,7 @@ require_once("verificar-permissao.php");
 $menu1 = "home";
 $menu2 = "usuarios";
 $menu3 = "fornecedores";
+$menu4 = "categorias";
 
 // RECUPERAR DADOS DO USUÁRIO
 $query = $pdo->query("SELECT * from usuarios WHERE id = '$_SESSION[id_usuario]'");
@@ -57,11 +58,11 @@ $id_usu = $res[0]['id'];
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Dropdown
+                                    Produtos
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Cadastro de produtos</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu4 ?>">Cadastro de categorias</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                                 </ul>
@@ -96,6 +97,9 @@ $id_usu = $res[0]['id'];
                 }
                 else if(@$_GET['pagina'] == $menu3){
                     require_once($menu3. ".php");
+                }
+                else if(@$_GET['pagina'] == $menu4){
+                    require_once($menu4. ".php");
                 }
                 else{
                     require_once($menu1. ".php");

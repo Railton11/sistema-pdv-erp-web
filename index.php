@@ -9,6 +9,7 @@ require_once("conexao.php");
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title><?php echo $nome_sistema ?></title>
         <link rel="stylesheet" href="recurso/login/style.css">
+        <link rel="shortcut icon" href="imagem/logo-icone.ico" />
     </head>
     <body>
         <div class="wrapper fadeInDown zero-raduis">
