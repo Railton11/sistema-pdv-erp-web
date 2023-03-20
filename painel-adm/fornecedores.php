@@ -42,11 +42,14 @@ require_once("verificar-permissao.php");
                     <td><?php echo $res[$i]["email"] ?></td>
                     <td><?php echo $res[$i]["telefone"] ?></td>
                     <td>
-                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=editar&id=<?php echo $res[$i]['id'] ?>">
-                            <i class="bi bi-pencil-square text-primary" title="Editar Registro"></i>
+                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=editar&id=<?php echo $res[$i]['id'] ?>" title="Editar Registro">
+                            <i class="bi bi-pencil-square text-primary"></i>
                         </a>
-                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=deletar&id=<?php echo $res[$i]['id'] ?>">
-                            <i class="bi bi-trash3 text-danger mx-2" title="Excluir Registro"></i>
+                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=deletar&id=<?php echo $res[$i]['id'] ?>" title="Excluir Registro">
+                            <i class="bi bi-trash3 text-danger mx-1"></i>
+                        </a>
+                        <a href="#" onclick="mostrarDados('<?php echo $res[$i]['endereco'] ?>', '<?php echo $res[$i]['nome'] ?>')" title="Ver endereço">
+                            <i class="bi bi-geo-alt text-dark mx-1"></i>
                         </a>
                     </td>
                 </tr>
@@ -175,6 +178,24 @@ if(@$_GET['funcao'] == "editar"){
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" id="modalDados">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Dados do fornecedor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body mb-3">
+                <b>Nome:</b>
+                <span id="nome-registro"></span>
+                <hr>
+                <b>Endereço:</b>
+                <span id="endereco-registro"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 
 if(@$_GET['funcao'] == 'novo'){ ?>
@@ -297,4 +318,14 @@ if(@$_GET['funcao'] == 'deletar'){ ?>
             "ordering": false
         });
     });
+</script>
+
+<script type="text/javascript">
+    function mostrarDados(endereco, nome){
+        $('#endereco-registro').text(endereco);
+        $('#nome-registro').text(nome);
+        var myModal = new bootstrap.Modal(
+            document.getElementById("modalDados"));
+        myModal.show();
+    }
 </script>
