@@ -5,7 +5,7 @@ require_once("../conexao.php");
 require_once("verificar-permissao.php");
 
 ?>
-<a class="btn btn-primary mt-2" href='index.php?pagina=<?php echo $pag ?>&funcao=novo' role="button">Novo Usuario</a>
+<a class="btn btn-primary mt-2" href='index.php?pagina=<?php echo $pag ?>&funcao=novo' role="button">Novo Usuário</a>
 
 <div class="mt-4">
     <?php
