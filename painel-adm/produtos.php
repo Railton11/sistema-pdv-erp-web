@@ -39,14 +39,28 @@ require_once("verificar-permissao.php");
                     $query_2 = $pdo->query("SELECT * FROM categorias WHERE id = '$id_cat'");
                     $res_2 = $query_2->fetchAll(PDO::FETCH_ASSOC);
                     $nome_categoria = $res_2[0]['nome'];
+
+                    // BUSCAR OS DADOS DO FORNECEDOR
+                    $id_forn = $res[$i]['fornecedor'];
+                    $query_f = $pdo->query("SELECT * from fornecedores where id = '$id_forn'");
+                    $res_f = $query_f->fetchAll(PDO::FETCH_ASSOC);
+                    $total_reg_f = @count($res_f);
+                    if($total_reg_f > 0){
+                        $nome_forn = $res_f[0]['nome'];
+                        $tel_forn = $res_f[0]['telefone'];
+                    }else {
+                        $nome_forn = 'Fornecedor não existe';
+                        $tel_forn = 'Telefone não existe';
+                    }
+
                 ?>
                 <tr>
                     <td><?php echo $res[$i]["nome"] ?></td>
                     <td><?php echo $res[$i]["codigo"] ?></td>
                     <td><?php echo $res[$i]["estoque"] ?></td>
-                    <td>R$<?php echo $res[$i]["valor_compra"] ?></td>
-                    <td>R$<?php echo $res[$i]["valor_venda"] ?></td>
-                    <td><?php echo $res[$i]["fornecedor"] ?></td>
+                    <td>R$ <?php echo number_format($res[$i]["valor_compra"], 2, ',', '.'); ?></td>
+                    <td>R$ <?php echo number_format($res[$i]["valor_venda"], 2, ',', '.'); ?></td>
+                    <td><?php echo $nome_forn ?></td>
                     <td><img src="../imagem/produtos/<?php echo $res[$i]['foto'] ?>" width="40px"></td>
                     <td>
                         <a href="index.php?pagina=<?php echo $pag ?>&funcao=editar&id=<?php echo $res[$i]['id'] ?>" title="Editar produto">
@@ -55,7 +69,7 @@ require_once("verificar-permissao.php");
                         <a href="index.php?pagina=<?php echo $pag ?>&funcao=deletar&id=<?php echo $res[$i]['id'] ?>" title="Excluir produto">
                             <i class="bi bi-trash3 text-danger mx-2" ></i>
                         </a>
-                        <a href="#" onclick="mostrarDados('<?php echo $nome_categoria ?>', '<?php echo $res[$i]['descricao'] ?>')" title="Mais informações">
+                        <a href="#" onclick="mostrarDados('<?php echo $res[$i]['nome'] ?>', '<?php echo $nome_categoria ?>', '<?php echo $res[$i]['descricao'] ?>', '<?php echo $nome_forn ?>', '<?php echo $tel_forn ?>')" title="Mais informações">
                             <i class="bi bi-three-dots text-dark mx-1"></i>
                         </a>
                     </td>
@@ -190,7 +204,7 @@ if(@$_GET['funcao'] == "editar"){
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Excluir Categoria</h5>
+                <h5 class="modal-title">Excluir Produto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="POST" id="form-excluir">
@@ -216,12 +230,22 @@ if(@$_GET['funcao'] == "editar"){
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Dados do produto</h5>
+                <h5 class="modal-title"><span id="nome-registro"></span></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body mb-3">
                 <b>Categoria:</b>
                 <span id="categoria-registro"></span>
+                <hr>
+                <span class="mr-4">
+                    <b>Fornecedor:</b>
+                    <span id="nome-forn-registro"></span>
+                </span>
+                
+                <span class="mr-4">
+                    <b>Telefone:</b>
+                    <span id="tel-forn-registro"></span>
+                </span>
                 <hr>
                 <b>Descrição:</b>
                 <span id="descricao-registro"></span>
@@ -379,9 +403,12 @@ if(@$_GET['funcao'] == 'deletar'){ ?>
 </script>
 
 <script type="text/javascript">
-    function mostrarDados(categoria, descricao){
+    function mostrarDados(nome, categoria, descricao, nome_forn, tel_forn){
+        $('#nome-registro').text(nome);
         $('#categoria-registro').text(categoria);
         $('#descricao-registro').text(descricao);
+        $('#nome-forn-registro').text(nome_forn);
+        $('#tel-forn-registro').text(tel_forn);
         var myModal = new bootstrap.Modal(
             document.getElementById("modalDados"));
         myModal.show();

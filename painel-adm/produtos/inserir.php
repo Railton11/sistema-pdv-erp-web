@@ -6,6 +6,7 @@ $nome = $_POST['nome'];
 $codigo = $_POST['codigo'];
 $descricao = $_POST['descricao'];
 $valor_venda = $_POST['valor_venda'];
+$valor_venda = str_replace(',', '.', $valor_venda);
 $categoria = $_POST['categoria'];
 $id = $_POST['id'];
 
