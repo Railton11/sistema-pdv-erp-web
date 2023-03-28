@@ -72,6 +72,9 @@ require_once("verificar-permissao.php");
                         <a href="#" onclick="mostrarDados('<?php echo $res[$i]['nome'] ?>', '<?php echo $nome_categoria ?>', '<?php echo $res[$i]['descricao'] ?>', '<?php echo $nome_forn ?>', '<?php echo $tel_forn ?>')" title="Mais informações">
                             <i class="bi bi-three-dots text-dark mx-1"></i>
                         </a>
+                        <a href="#" onclick="comprarProdutos('<?php echo $res[$i]['id'] ?>')" title="Comprar">
+                            <i class="bi bi-cash-coin text-success mx-1"></i>
+                        </a>
                     </td>
                 </tr>
                 <?php } ?>
