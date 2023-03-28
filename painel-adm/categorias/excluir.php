@@ -9,7 +9,9 @@ $id = $_POST['id'];
 $query_con = $pdo->query("SELECT * FROM categorias WHERE id = '$id'");
 $res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
 $imagem = $res_con[0]['foto'];
-unlink('../../imagem/categorias/'.$imagem);
+if($imagem != 'sem-foto.png'){
+    unlink('../../imagem/categorias/'.$imagem);
+}
 
 $query_con = $pdo->query("DELETE FROM categorias WHERE id = '$id'");
 

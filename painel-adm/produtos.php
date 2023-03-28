@@ -209,7 +209,7 @@ if(@$_GET['funcao'] == "editar"){
             </div>
             <form method="POST" id="form-excluir">
                 <div class="modal-body">
-                    <p>Deseja realmente excluir essa categoria?</p>
+                    <p>Deseja realmente excluir esse produto?</p>
                     <div align="center" class="mt-1" id="mensagem-deletar">
 						
 					</div>
@@ -372,6 +372,7 @@ if(@$_GET['funcao'] == 'deletar'){ ?>
 
 <script type="text/javascript">
     $(document).ready(function () {
+        gerarCodigo();
         $('#example').DataTable({
             "ordering": false
         });
