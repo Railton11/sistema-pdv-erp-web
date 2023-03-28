@@ -38,10 +38,10 @@ require_once("verificar-permissao.php");
                     <td></td>
                     <td><img src="../imagem/categorias/<?php echo $res[$i]['foto'] ?>" width="40px"></td>
                     <td>
-                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=editar&id=<?php echo $res[$i]['id'] ?>">
+                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=editar&id=<?php echo $res[$i]['id'] ?>" style="text-decoration: none;">
                             <i class="bi bi-pencil-square text-primary" title="Editar Registro"></i>
                         </a>
-                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=deletar&id=<?php echo $res[$i]['id'] ?>">
+                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=deletar&id=<?php echo $res[$i]['id'] ?>" style="text-decoration: none;">
                             <i class="bi bi-trash3 text-danger mx-2" title="Excluir Registro"></i>
                         </a>
                     </td>

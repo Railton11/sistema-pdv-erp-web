@@ -42,14 +42,14 @@ require_once("verificar-permissao.php");
                     <td><?php echo $res[$i]["email"] ?></td>
                     <td><?php echo $res[$i]["telefone"] ?></td>
                     <td>
-                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=editar&id=<?php echo $res[$i]['id'] ?>" title="Editar Registro">
-                            <i class="bi bi-pencil-square text-primary"></i>
+                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=editar&id=<?php echo $res[$i]['id'] ?>" title="Editar Registro" style="text-decoration: none;">
+                            <i class="bi bi-pencil-square text-primary mx-1"></i>
                         </a>
-                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=deletar&id=<?php echo $res[$i]['id'] ?>" title="Excluir Registro">
+                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=deletar&id=<?php echo $res[$i]['id'] ?>" title="Excluir Registro" style="text-decoration: none;">
                             <i class="bi bi-trash3 text-danger mx-1"></i>
                         </a>
-                        <a href="#" onclick="mostrarDados('<?php echo $res[$i]['endereco'] ?>', '<?php echo $res[$i]['nome'] ?>')" title="Ver endereço">
-                            <i class="bi bi-geo-alt text-dark mx-1"></i>
+                        <a href="#" onclick="mostrarDados('<?php echo $res[$i]['endereco'] ?>', '<?php echo $res[$i]['nome'] ?>')" title="Ver endereço" style="text-decoration: none;">
+                            <i class="bi bi-geo-alt text-dark "></i>
                         </a>
                     </td>
                 </tr>

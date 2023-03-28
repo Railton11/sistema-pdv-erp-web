@@ -63,17 +63,17 @@ require_once("verificar-permissao.php");
                     <td><?php echo $nome_forn ?></td>
                     <td><img src="../imagem/produtos/<?php echo $res[$i]['foto'] ?>" width="40px"></td>
                     <td>
-                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=editar&id=<?php echo $res[$i]['id'] ?>" title="Editar produto">
-                            <i class="bi bi-pencil-square text-primary" ></i>
+                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=editar&id=<?php echo $res[$i]['id'] ?>" title="Editar produto" style="text-decoration: none;">
+                            <i class="bi bi-pencil-square text-primary mx-1"></i>
                         </a>
-                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=deletar&id=<?php echo $res[$i]['id'] ?>" title="Excluir produto">
-                            <i class="bi bi-trash3 text-danger mx-2" ></i>
+                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=deletar&id=<?php echo $res[$i]['id'] ?>" title="Excluir produto" style="text-decoration: none;">
+                            <i class="bi bi-trash3 text-danger"></i>
                         </a>
-                        <a href="#" onclick="mostrarDados('<?php echo $res[$i]['nome'] ?>', '<?php echo $nome_categoria ?>', '<?php echo $res[$i]['descricao'] ?>', '<?php echo $nome_forn ?>', '<?php echo $tel_forn ?>')" title="Mais informações">
+                        <a href="#" onclick="mostrarDados('<?php echo $res[$i]['nome'] ?>', '<?php echo $nome_categoria ?>', '<?php echo $res[$i]['descricao'] ?>', '<?php echo $nome_forn ?>', '<?php echo $tel_forn ?>')" title="Mais informações" style="text-decoration: none;">
                             <i class="bi bi-three-dots text-dark mx-1"></i>
                         </a>
-                        <a href="#" onclick="comprarProdutos('<?php echo $res[$i]['id'] ?>')" title="Comprar">
-                            <i class="bi bi-cash-coin text-success mx-1"></i>
+                        <a href="#" onclick="comprarProdutos('<?php echo $res[$i]['id'] ?>')" title="Comprar" style="text-decoration: none;">
+                            <i class="bi bi-cash-coin text-success"></i>
                         </a>
                     </td>
                 </tr>
@@ -253,6 +253,64 @@ if(@$_GET['funcao'] == "editar"){
                 <b>Descrição:</b>
                 <span id="descricao-registro"></span>
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalComprar">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Fazer compra</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" id="form-comprar">
+                <div class="modal-body">
+                    <div class="mb-3"> 
+                        <label for="exampleFormControlInput1" class="form-label">Fornecedor</label>
+                            <select class="form-select mt-1" aria-label="Default select example" name="fornecedor">
+                                <?php 
+                                    $query = $pdo->query("SELECT * from fornecedores order by nome asc");
+                                    $res = $query->fetchAll(PDO::FETCH_ASSOC);
+                                    $total_reg = @count($res);
+                                    if($total_reg > 0){
+                                        for($i=0; $i <$total_reg; $i++){
+                                            foreach($res[$i] as $key => $value){
+                            
+                                            }
+                                            ?>
+                                            <option value="<?php echo $res[$i]['id'] ?>"><?php echo $res[$i]['nome'] ?></option>
+                                        <?php } 
+                                    }else{
+                                        echo "<option value=''>Cadastre um fornecedor</option>";
+                                    } ?>
+                            </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Valor da compra</label>
+                                <input type="text" class="form-control" id="valor_compra" name="valor_compra" required=""> 
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Quantidade</label>
+                                <input type="number" class="form-control" id="quantidade" name="quantidade" required=""> 
+                            </div>
+                        </div>
+                    </div>
+                    <div align="center" class="mt-1" id="mensagem-comprar">
+						
+					</div>
+                </div>
+
+                <div class="modal-footer">
+                    <button name="btn-fechar-comprar" id="btn-fechar-comprar" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button name="btn-salvar-comprar" id="btn-salvar-comprar" type="submit" class="btn btn-success">Salvar</button>
+
+                    <input name="id-comprar" id="id-comprar" type="hidden">
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -438,4 +496,61 @@ if(@$_GET['funcao'] == 'deletar'){ ?>
             }
         });
     }
+</script>
+<script type="text/javascript">
+    function comprarProdutos(id){
+        event.preventDefault();
+        $('#id-comprar').val(id);
+        var myModal = new bootstrap.Modal(
+            document.getElementById("modalComprar"));
+        myModal.show();
+    }
+</script>
+
+<!--AJAX PARA COMPRA -->
+<script type="text/javascript">
+    $("#form-comprar").submit(function () {
+        var pag = "<?=$pag?>";
+        event.preventDefault();
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: pag + "/comprar-produto.php",
+            type: 'POST',
+            data: formData,
+
+            success: function (mensagem) {
+
+                $('#mensagem-comprar').removeClass()
+
+                if (mensagem.trim() == "Salvo com Sucesso!") {
+
+                    //$('#nome').val('');
+                    //$('#cpf').val('');
+                    $('#btn-fechar-comprar').click();
+                    window.location = "index.php?pagina="+pag;
+
+                } else {
+
+                    $('#mensagem-comprar').addClass('text-danger')
+                }
+
+                $('#mensagem-comprar').text(mensagem)
+
+            },
+
+            cache: false,
+            contentType: false,
+            processData: false,
+            xhr: function () {  // Custom XMLHttpRequest
+                var myXhr = $.ajaxSettings.xhr();
+                if (myXhr.upload) { // Avalia se tem suporte a propriedade upload
+                    myXhr.upload.addEventListener('progress', function () {
+                        /* faz alguma coisa durante o progresso do upload */
+                    }, false);
+                }
+                return myXhr;
+            }
+        });
+    });
 </script>
