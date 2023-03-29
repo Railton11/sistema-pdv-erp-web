@@ -37,11 +37,10 @@ $res->bindValue(":valor_compra", $valor_compra);
 $res->bindValue(":id", $id);
 $res->execute();
 
-$res = $pdo->prepare("INSERT compras SET total = :total, data = curDate(), usuario = :usuario, valor = :valor_compra, fornecedor = :fornecedor, pago = 'Não'");
+$res = $pdo->prepare("INSERT compras SET total = :total, data = curDate(), usuario = :usuario, fornecedor = :fornecedor, pago = 'Não'");
 
 $res->bindValue(":usuario", $id_usuario);
 $res->bindValue(":fornecedor", $fornecedor);
-$res->bindValue(":valor_compra", $valor_compra);
 $res->bindValue(":total", $total_compra);
 $res->execute();
 
