@@ -69,6 +69,16 @@ $id_usu = $res[0]['id'];
                                     <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu6 ?>">Lista de compras</a></li>
                                 </ul>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Relatórios
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="../rel/relProdutos_class.php" target="_blank">Relatório de produtos</a></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalRelCompras" href="">Relatório de compras</a></li>
+                                    <li><a class="dropdown-item" href="#">Relatório do caixa</a></li>
+                                </ul>
+                            </li>
                         </ul>
                         <form class="d-flex">
                             <div class="btn-group">
@@ -164,6 +174,58 @@ $id_usu = $res[0]['id'];
                             <input name="antigo-perfil" type="hidden" value="<?php echo @$cpf_usu ?>">
 
                             <input name="antigo2-perfil" type="hidden" value="<?php echo @$email_usu ?>">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <!--  Modal Rel Compras-->
+        <div class="modal fade" id="ModalRelCompras" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Compras</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="../rel/relCompras_class.php" method="POST" target="_blank">
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label >Data Inicial</label>
+                                        <input value="<?php echo date('Y-m-d') ?>" type="date" class="form-control"  name="dataInicial" >
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+                                        <label >Data Final</label>
+                                        <input value="<?php echo date('Y-m-d') ?>" type="date" class="form-control"  name="dataFinal" >
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label >Pago</label>
+                                        <select class="form-select" name="status">
+                                            <option value="">Todas</option>
+                                            <option value="Sim">Sim</option>
+                                            <option value="Não">Não</option>
+                                        
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>     
+
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="submit" class="btn btn-primary">Gerar Relatório</button>
                         </div>
                     </form>
                 </div>

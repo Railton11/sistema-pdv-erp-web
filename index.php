@@ -7,7 +7,7 @@ require_once("conexao.php");
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title><?php echo $nome_sistema ?></title>
+        <title>Sistema de apoio Casa Nova Materiais de Construção</title>
         <link rel="stylesheet" href="recurso/login/style.css">
         <link rel="shortcut icon" href="imagem/logo-icone.ico" />
     </head>
