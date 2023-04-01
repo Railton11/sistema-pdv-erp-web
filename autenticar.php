@@ -25,9 +25,9 @@ $query_con = $pdo->prepare("SELECT * from usuarios WHERE (email = :usuario or cp
         if($nivel == 'Operador'){
             echo "<script language='javascript'>window.location='painel-operador'</script>";
         }
-        if($nivel == 'Tesoureiro'){
+        /*if($nivel == 'Tesoureiro'){
             echo "<script language='javascript'>window.location='painel-tesoureiro'</script>";
-        }
+        }*/
     }else{
         echo "<script language='javascript'>window.alert('Dados Incorretos')</script>";
         echo "<script language='javascript'>window.location='index.php'</script>";
