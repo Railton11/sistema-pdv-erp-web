@@ -12,6 +12,7 @@ $id = $_POST['id'];
 
 
 $antigo = $_POST['antigo'];
+$antigo2 = $_POST['antigo2'];
 
 // EVITAR DUPLICIDADE DE NOME
 if($antigo != $nome){
@@ -21,6 +22,18 @@ if($antigo != $nome){
     $res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
     if(@count($res_con) > 0){
         echo "Protudo já cadastrado! ";
+        exit();
+    }
+}
+
+// EVITAR DUPLICIDADE DE CÓDIGO
+if($antigo2 != $codigo){
+    $query_con = $pdo->prepare("SELECT * from produtos WHERE codigo = :codigo");
+    $query_con->bindValue(":codigo", $codigo);
+    $query_con->execute();
+    $res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+    if(@count($res_con) > 0){
+        echo "Protudo com este código já existe! ";
         exit();
     }
 }

@@ -196,6 +196,7 @@ if(@$_GET['funcao'] == "editar"){
                     <input name="id" type="hidden" value="<?php echo @$_GET['id'] ?>">
 
                     <input name="antigo" type="hidden" value="<?php echo @$nome ?>">
+                    <input name="antigo2" type="hidden" value="<?php echo @$codigo ?>">
 
                 </div>
             </form>
