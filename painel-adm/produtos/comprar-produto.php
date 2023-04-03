@@ -43,8 +43,9 @@ $res->bindValue(":usuario", $id_usuario);
 $res->bindValue(":fornecedor", $fornecedor);
 $res->bindValue(":total", $total_compra);
 $res->execute();
+$id_compra = $pdo->lastInsertId();
 
-$res = $pdo->prepare("INSERT contas_pagar SET descricao = 'Comprar de produtos', valor = :valor, data = curDate(), usuario = :usuario, pago = 'Não'");
+$res = $pdo->prepare("INSERT contas_pagar SET descricao = 'Comprar de produtos', valor = :valor, data = curDate(), usuario = :usuario, pago = 'Não', id_compra = '$id_compra'");
 
 $res->bindValue(":usuario", $id_usuario);
 $res->bindValue(":valor", $total_compra);

@@ -15,6 +15,8 @@ if($total_reg > 0){
     }
 }
 
+$query_con = $pdo->query("DELETE from contas_pagar WHERE id_compra = '$id'");
+
 $query_con = $pdo->query("DELETE from compras WHERE id = '$id'");
 
 echo "Excluído com Sucesso!";
