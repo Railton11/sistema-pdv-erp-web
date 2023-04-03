@@ -44,5 +44,11 @@ $res->bindValue(":fornecedor", $fornecedor);
 $res->bindValue(":total", $total_compra);
 $res->execute();
 
+$res = $pdo->prepare("INSERT contas_pagar SET descricao = 'Comprar de produtos', valor = :valor, data = curDate(), usuario = :usuario, pago = 'Não'");
+
+$res->bindValue(":usuario", $id_usuario);
+$res->bindValue(":valor", $total_compra);
+$res->execute();
+
 echo "Salvo com Sucesso!";
 ?>
