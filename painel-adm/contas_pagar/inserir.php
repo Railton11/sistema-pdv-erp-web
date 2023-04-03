@@ -13,9 +13,13 @@ $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $total_reg = @count($res);
 if($total_reg > 0){
     $pago = $res[0]['pago'];
-
+    $descricao = $res_con[0]['descricao'];
     if($pago == 'Sim'){
         echo 'Essa conta já esta paga, você não pode editá-la';
+        exit();
+    }
+    if($descricao == 'Compras de produtos'){
+        echo 'Essa conta foi lançada pelo Gerente/Administrador, você não pode editá-la';
         exit();
     }
 }
