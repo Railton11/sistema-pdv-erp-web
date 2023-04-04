@@ -53,6 +53,10 @@ require_once("verificar-permissao.php");
                         <a href="index.php?pagina=<?php echo $pag ?>&funcao=deletar&id=<?php echo $res[$i]['id'] ?>" style="text-decoration: none;">
                             <i class="bi bi-trash3 text-danger mx-2" title="Excluir Registro"></i>
                         </a>
+                        </a>
+                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=pagar&id=<?php echo $res[$i]['id'] ?>" style="text-decoration: none;">
+                            <i class="bi bi-cash-coin text-success" title="Pagar"></i>
+                        </a>
                         <?php } ?>
                     </td>
                 </tr>
@@ -120,12 +124,12 @@ if(@$_GET['funcao'] == "editar"){
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Excluir Categoria</h5>
+                <h5 class="modal-title">Excluir conta</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="POST" id="form-excluir">
                 <div class="modal-body">
-                    <p>Deseja realmente excluir essa categoria?</p>
+                    <p>Deseja realmente excluir essa conta?</p>
                     <div align="center" class="mt-1" id="mensagem-deletar">
 						
 					</div>
@@ -134,6 +138,32 @@ if(@$_GET['funcao'] == "editar"){
                 <div class="modal-footer">
                     <button name="btn-fechar-exluir" id="btn-fechar-exluir" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                     <button name="btn-deletar" id="btn-deletar" type="submit" class="btn btn-danger">Excluir</button>
+
+                    <input name="id" type="hidden" value="<?php echo @$_GET['id'] ?>">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modalPagar">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Pagamento de conta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" id="form-pagar">
+                <div class="modal-body">
+                    <p>Deseja realmente pagar essa conta?</p>
+                    <div align="center" class="mt-1" id="mensagem-pagar">
+						
+					</div>
+                </div>
+
+                <div class="modal-footer">
+                    <button name="btn-fechar-pagar" id="btn-fechar-pagar" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button name="btn-pagar" id="btn-pagar" type="submit" class="btn btn-success">Pagar</button>
 
                     <input name="id" type="hidden" value="<?php echo @$_GET['id'] ?>">
                 </div>
@@ -168,6 +198,16 @@ if(@$_GET['funcao'] == 'deletar'){ ?>
     <script type="text/javascript">
         var myModal = new bootstrap.Modal(
             document.getElementById("modalDeletar"));
+        myModal.show();
+    </script>
+<?php } ?>
+
+<?php
+
+if(@$_GET['funcao'] == 'pagar'){ ?>
+    <script type="text/javascript">
+        var myModal = new bootstrap.Modal(
+            document.getElementById("modalPagar"));
         myModal.show();
     </script>
 <?php } ?>
@@ -247,6 +287,44 @@ if(@$_GET['funcao'] == 'deletar'){ ?>
                 }
 
                 $('#mensagem-deletar').text(mensagem)
+
+            },
+
+            cache: false,
+            contentType: false,
+            processData: false,
+            
+        });
+	});
+</script>
+
+<!--AJAX PARA PAGAR DADOS -->
+<script type="text/javascript">
+	$("#form-pagar").submit(function () {
+		var pag = "<?=$pag?>";
+		event.preventDefault();
+		var formData = new FormData(this);
+
+		$.ajax({
+			url: pag + "/pagar.php",
+			type: 'POST',
+			data: formData,
+
+			success: function (mensagem) {
+
+				$('#mensagem-pagar').removeClass()
+
+				if (mensagem.trim() == "Pago com Sucesso!") {
+
+                    $('#btn-fechar-pagar').click();
+                    window.location = "index.php?pagina="+pag;
+
+                } else {
+
+                	$('#mensagem-pagar').addClass('text-success')
+                }
+
+                $('#mensagem-pagar').text(mensagem)
 
             },
 
