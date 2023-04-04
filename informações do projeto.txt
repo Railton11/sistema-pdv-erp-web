@@ -1,0 +1,7 @@
+fluxo de caixa
+cupom de pedido com desconto proprio
+não integração com o sefaz-pb ### OK
+organizar estoque, facilitar busca de produtos por nome e fornecedor, exibir informações vitais ### OK
+orgazinar fornecedores facilitando busca por nome ou cpf ### OK
+produtos com código de barras #### OK
+pdv com integração com scanner
