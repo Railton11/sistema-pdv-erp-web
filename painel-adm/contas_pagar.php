@@ -10,7 +10,7 @@ require_once("verificar-permissao.php");
 <div class="mt-4">
     <?php
     // PERCORRER LISTA DE USUÁRIOS
-    $query = $pdo->query("SELECT * from contas_pagar order by id desc");
+    $query = $pdo->query("SELECT * from contas_pagar order by pago asc, vencimento asc");
     $res = $query->fetchAll(PDO::FETCH_ASSOC);
     $total_reg = @count($res);
     if($total_reg > 0){ ?>
@@ -19,7 +19,7 @@ require_once("verificar-permissao.php");
             <thead>
                 <tr>
                     <th>Valor</th>
-                    <th>Data</th>
+                    <th>Vencimento</th>
                     <th>Usuário</th>
                     <th>Descrição</th>
                     <th>Pago</th>
@@ -41,7 +41,7 @@ require_once("verificar-permissao.php");
                 ?>
                 <tr>
                     <td>R$ <?php echo number_format($res[$i]["valor"], 2, ',', '.'); ?></td>
-                    <td><?php echo implode('/', array_reverse(explode('-', $res[$i]["data"]))); ?></td>
+                    <td><?php echo implode('/', array_reverse(explode('-', $res[$i]["vencimento"]))); ?></td>
                     <td><?php echo $nome_usu ?></td>
                     <td><?php echo $res[$i]["descricao"] ?></td>
                     <td><?php echo $res[$i]["pago"] ?></td>
@@ -77,6 +77,7 @@ if(@$_GET['funcao'] == "editar"){
     if($total_reg > 0){
         $descricao = $res[0]['descricao'];
         $valor = $res[0]['valor'];
+        $vencimento = $res[0]['vencimento'];
     }
 }else{
     $titulo_modal = "Inserir registro";
@@ -99,7 +100,11 @@ if(@$_GET['funcao'] == "editar"){
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Descrição</label>
                         <textarea type="text" class="form-control" name="descricao" id="descricao" valu="<?php echo @$descricao ?>"></textarea>
-                    </div> 
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Vencimento</label>
+                        <input type="date" class="form-control" name="vencimento" id="vencimento" required="" value="<?php echo $vencimento ?>">
+                    </div>
 
                     <div align="center" class="mt-1" id="mensagem">
 						

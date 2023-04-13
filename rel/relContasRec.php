@@ -36,7 +36,7 @@ if($dataInicial != $dataFinal){
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Relatório de Compras</title>
+		<title>Relatório de Recebimento de Contas</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -192,7 +192,7 @@ if($dataInicial != $dataFinal){
 		</div>
 		<div class="container">
 			<div align="center">	
-				<span class="titulorel">Relatório de Compras <?php echo $status_serv ?></span>
+				<span class="titulorel">Relatório de Recebimento de Contas <?php echo $status_serv ?></span>
 			</div>
 			<hr>
 			<div class="row margem-superior">
@@ -210,25 +210,26 @@ if($dataInicial != $dataFinal){
 		</div>
 	<table class='table' width='100%'  cellspacing='0' cellpadding='3'>
 		<tr bgcolor='#f9f9f9' >
-			<th>Total</th>
-			<th>Data</th>
-			<th>Usuário</th>
-			<th>Fornecedor</th>
+			<th>Descrição</th>
+			<th>Valor</th>
 			<th>Pago</th>
+			<th>Usuário</th>
+			<th>Vencimento</th>
+			<th>Data</th>
 		</tr>
 		<?php 
 			$saldo = 0;	
-			$query = $pdo->query("SELECT * FROM compras where data >= '$dataInicial' and data <= '$dataFinal' and pago LIKE '$status_like' order by id desc");
+			$query = $pdo->query("SELECT * FROM contas_receber where data >= '$dataInicial' and data <= '$dataFinal' and pago LIKE '$status_like' order by data asc");
 			$res = $query->fetchAll(PDO::FETCH_ASSOC);
 			$totalItens = @count($res);	
 			for ($i=0; $i < @count($res); $i++) { 
 				foreach ($res[$i] as $key => $value) {
 					}
-				$total = $res[$i]['total'];
-				$data = $res[$i]['data'];
 				$usuario = $res[$i]['usuario'];
-				$fornecedor = $res[$i]['fornecedor'];
-				$pago = $res[$i]['pago'];	
+				$pago = $res[$i]['pago'];
+				$total = $res[$i]['valor'];
+				$data = $res[$i]['data'];
+				$vencimento = $res[$i]['vencimento'];
 				$id = $res[$i]['id'];
 
 				$saldo = $saldo + $total;
@@ -239,19 +240,15 @@ if($dataInicial != $dataFinal){
 				$query_usu = $pdo->query("SELECT * FROM usuarios where id = '$usuario'");
 				$res_usu = $query_usu->fetchAll(PDO::FETCH_ASSOC);
 				$nome_usu = $res_usu[0]['nome'];
-
-
-				$query_usu = $pdo->query("SELECT * FROM fornecedores where id = '$fornecedor'");
-				$res_usu = $query_usu->fetchAll(PDO::FETCH_ASSOC);
-				$nome_forn = $res_usu[0]['nome'];
 				
 		?>
 		<tr>		
-			<td><?php echo $total ?> </td>
-			<td><?php echo $data ?> </td>
-			<td><?php echo $nome_usu ?> </td>
-			<td><?php echo $nome_forn ?> </td>
+			<td><?php echo $res[$i]['descricao'] ?> </td>
+			<td>R$ <?php echo number_format($res[$i]['valor'], 2, ',','.'); ?> </td>
 			<td><?php echo $pago ?> </td>
+			<td><?php echo $nome_usu ?> </td>
+			<td><?php echo implode('/', array_reverse(explode('-', $res[$i]['vencimento']))); ?> </td>
+			<td><?php echo implode('/', array_reverse(explode('-', $res[$i]['data']))); ?> </td>
 		</tr>
 		<?php } ?>
 	</table>

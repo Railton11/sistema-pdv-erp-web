@@ -60,7 +60,7 @@ if($dataInicial != $dataFinal){
 			}
 
 			.cabecalho {    
-				background-color: #white;
+				background-color: white;
 				padding:10px;
 				margin-bottom:30px;
 				width:100%;
@@ -192,7 +192,7 @@ if($dataInicial != $dataFinal){
 		</div>
 		<div class="container">
 			<div align="center">	
-				<span class="titulorel">Relatório de Contas<?php echo $status_serv ?></span>
+				<span class="titulorel">Relatório de Contas <?php echo $status_serv ?></span>
 			</div>
 			<hr>
 			<div class="row margem-superior">
@@ -212,19 +212,24 @@ if($dataInicial != $dataFinal){
 		<tr bgcolor='#f9f9f9' >
 			<th>Descrição</th>
 			<th>Valor</th>
+			<th>Pago</th>
 			<th>Usuário</th>
+			<th>Vencimento</th>
 			<th>Data</th>
 		</tr>
 		<?php 
 			$saldo = 0;	
-			$query = $pdo->query("SELECT * FROM contas_pagar where data >= '$dataInicial' and data <= '$dataFinal' and pago LIKE '$status_like' order by id desc");
+			$query = $pdo->query("SELECT * FROM contas_pagar where data >= '$dataInicial' and data <= '$dataFinal' and pago LIKE '$status_like' order by data asc");
 			$res = $query->fetchAll(PDO::FETCH_ASSOC);
 			$totalItens = @count($res);	
 			for ($i=0; $i < @count($res); $i++) { 
 				foreach ($res[$i] as $key => $value) {
 					}
 				$usuario = $res[$i]['usuario'];
-				$pago = $res[$i]['pago'];	
+				$pago = $res[$i]['pago'];
+				$total = $res[$i]['valor'];
+				$data = $res[$i]['data'];
+				$vencimento = $res[$i]['vencimento'];
 				$id = $res[$i]['id'];
 
 				$saldo = $saldo + $total;
@@ -240,7 +245,9 @@ if($dataInicial != $dataFinal){
 		<tr>		
 			<td><?php echo $res[$i]['descricao'] ?> </td>
 			<td>R$ <?php echo number_format($res[$i]['valor'], 2, ',','.'); ?> </td>
+			<td><?php echo $pago ?> </td>
 			<td><?php echo $nome_usu ?> </td>
+			<td><?php echo implode('/', array_reverse(explode('-', $res[$i]['vencimento']))); ?> </td>
 			<td><?php echo implode('/', array_reverse(explode('-', $res[$i]['data']))); ?> </td>
 		</tr>
 		<?php } ?>

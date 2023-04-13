@@ -12,7 +12,11 @@ $menu4 = "categorias";
 $menu5 = "produtos";
 $menu6 = "compras";
 $menu7 = "contas_pagar";
-$menu8 = "vendas";
+$menu8 = "contas_receber";
+$menu9 = "movimentacoes";
+$menu10 = "contas_pagar_vencidas";
+$menu11 = "contas_pagar_hoje";
+$menu12 = "contas_receber_vencidas";
 
 
 // RECUPERAR DADOS DO USUÁRIO
@@ -68,7 +72,6 @@ $id_usu = $res[0]['id'];
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu5 ?>">Cadastro de produtos</a></li>
                                     <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu4 ?>">Cadastro de categorias</a></li>
-                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu6 ?>">Lista de compras</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -76,12 +79,21 @@ $id_usu = $res[0]['id'];
                                     Financeiro
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu7 ?>">Contas</a></li>
-                                    <li><a class="dropdown-item" href="#">Contas a receber</a></li>
-                                    <li><a class="dropdown-item" href="#">Pagar vencidas</a></li>
-                                    <li><a class="dropdown-item" href="#">Pagar hoje</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu9 ?>">Movimentações</a></li>
                                     <li><a class="dropdown-item" href="#">Lista de vendas</a></li>
-                                    <li><a class="dropdown-item" href="#">Lista de compras</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu6 ?>">Lista de compras</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Contas
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu7 ?>">Contas pagar</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu8 ?>">Contas receber</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu11 ?>">Pagar hoje</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu10 ?>">Pagar contas vencidas</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu12 ?>">Receber contas vencidas</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -91,7 +103,9 @@ $id_usu = $res[0]['id'];
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="../rel/relProdutos_class.php" target="_blank">Relatório de produtos</a></li>
                                     <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalRelCompras" href="">Relatório de compras</a></li>
-                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalRelContas" href="">Relatório de contas</a></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalRelContas" href="">Relatório de contas pagar</a></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalRelContasRec" href="">Relatório de contas receber</a></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalRelMov" href="">Relatório de movimentações</a></li>
                                     <li><a class="dropdown-item" href="#">Relatório do caixa</a></li>
                                 </ul>
                             </li>
@@ -140,6 +154,18 @@ $id_usu = $res[0]['id'];
                 }
                 else if(@$_GET['pagina'] == $menu8){
                     require_once($menu8. ".php");
+                }
+                else if(@$_GET['pagina'] == $menu9){
+                    require_once($menu9. ".php");
+                }
+                else if(@$_GET['pagina'] == $menu10){
+                    require_once($menu10. ".php");
+                }
+                else if(@$_GET['pagina'] == $menu11){
+                    require_once($menu11. ".php");
+                }
+                else if(@$_GET['pagina'] == $menu12){
+                    require_once($menu12. ".php");
                 }
                 else{
                     require_once($menu1. ".php");
@@ -263,6 +289,106 @@ $id_usu = $res[0]['id'];
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form action="../rel/relContas_class.php" method="POST" target="_blank">
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label >Data Inicial</label>
+                                        <input value="<?php echo date('Y-m-d') ?>" type="date" class="form-control"  name="dataInicial" >
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+                                        <label >Data Final</label>
+                                        <input value="<?php echo date('Y-m-d') ?>" type="date" class="form-control"  name="dataFinal" >
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label >Pago</label>
+                                        <select class="form-select" name="status">
+                                            <option value="">Todas</option>
+                                            <option value="Sim">Sim</option>
+                                            <option value="Não">Não</option>
+                                        
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>     
+
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="submit" class="btn btn-primary">Gerar Relatório</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--  Modal Rel Movimentação-->
+        <div class="modal fade" id="ModalRelMov" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Movimentações</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="../rel/relMov_class.php" method="POST" target="_blank">
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label >Data Inicial</label>
+                                        <input value="<?php echo date('Y-m-d') ?>" type="date" class="form-control"  name="dataInicial" >
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+                                        <label >Data Final</label>
+                                        <input value="<?php echo date('Y-m-d') ?>" type="date" class="form-control"  name="dataFinal" >
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label >Status</label>
+                                        <select class="form-select" name="status">
+                                            <option value="">Todas</option>
+                                            <option value="Entrada">Entradas</option>
+                                            <option value="Saída">Saídas</option>
+                                        
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>     
+
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="submit" class="btn btn-primary">Gerar Relatório</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--  Modal Rel Contas Receber-->
+        <div class="modal fade" id="ModalRelContasRec" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Contas receber</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="../rel/relContasRec_class.php" method="POST" target="_blank">
                         <div class="modal-body">
 
                             <div class="row">

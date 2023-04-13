@@ -15,10 +15,10 @@ $status_like = '%'.$status.'%';
 $dataInicialF = implode('/', array_reverse(explode('-', $dataInicial)));
 $dataFinalF = implode('/', array_reverse(explode('-', $dataFinal)));
 
-if($status == 'Sim'){
-	$status_serv = 'Pagas ';
-}else if($status == 'Não'){
-	$status_serv = 'Pendentes';
+if($status == 'Entrada'){
+	$status_serv = 'Entradas ';
+}else if($status == 'Saída'){
+	$status_serv = 'Saídas';
 
 }else{
 	$status_serv = '';
@@ -36,7 +36,7 @@ if($dataInicial != $dataFinal){
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Relatório de Compras</title>
+		<title>Relatório de Movimentações</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -192,7 +192,7 @@ if($dataInicial != $dataFinal){
 		</div>
 		<div class="container">
 			<div align="center">	
-				<span class="titulorel">Relatório de Compras <?php echo $status_serv ?></span>
+				<span class="titulorel">Relatório de Movimentações<?php echo $status_serv ?></span>
 			</div>
 			<hr>
 			<div class="row margem-superior">
@@ -210,57 +210,68 @@ if($dataInicial != $dataFinal){
 		</div>
 	<table class='table' width='100%'  cellspacing='0' cellpadding='3'>
 		<tr bgcolor='#f9f9f9' >
-			<th>Total</th>
-			<th>Data</th>
+			<th>Tipo</th>
+			<th>Descrição</th>
+			<th>Valor</th>
 			<th>Usuário</th>
-			<th>Fornecedor</th>
-			<th>Pago</th>
+			<th>Data</th>
 		</tr>
-		<?php 
-			$saldo = 0;	
-			$query = $pdo->query("SELECT * FROM compras where data >= '$dataInicial' and data <= '$dataFinal' and pago LIKE '$status_like' order by id desc");
+		<?php
+			$entradas = 0;
+			$saidas = 0;
+			$saldo = 0;
+			$query = $pdo->query("SELECT * FROM movimentacoes where data >= '$dataInicial' and data <= '$dataFinal' and tipo LIKE '$status_like' order by id desc");
 			$res = $query->fetchAll(PDO::FETCH_ASSOC);
 			$totalItens = @count($res);	
 			for ($i=0; $i < @count($res); $i++) { 
 				foreach ($res[$i] as $key => $value) {
 					}
-				$total = $res[$i]['total'];
-				$data = $res[$i]['data'];
-				$usuario = $res[$i]['usuario'];
-				$fornecedor = $res[$i]['fornecedor'];
-				$pago = $res[$i]['pago'];	
-				$id = $res[$i]['id'];
 
-				$saldo = $saldo + $total;
+				//BUSCAR OS DADOS DO USUARIO
+				$id_usu = $res[$i]['usuario'];
+				$query_f = $pdo->query("SELECT * from usuarios where id = '$id_usu'");
+				$res_f = $query_f->fetchAll(PDO::FETCH_ASSOC);
+				$total_reg_f = @count($res_f);
+				if($total_reg_f > 0){ 
+					$nome_usuario = $res_f[0]['nome'];
+					
+				}
+				if($res[$i]['tipo'] == 'Entrada'){
+					$classes = 'text-success';
+					$entradas += $res[$i]['valor'];
+				}
+				else{
+					$classes = 'text-danger';
+					$saidas += $res[$i]['valor'];
+				}
+				$saldo = $entradas - $saidas;
+				$entradasF = number_format($entradas, 2, ',', '.');
+				$saidasF = number_format($saidas, 2, ',', '.');
 				$saldoF = number_format($saldo, 2, ',', '.');
-				$total = number_format($total, 2, ',', '.');
-				$data = implode('/', array_reverse(explode('-', $data)));
-
-				$query_usu = $pdo->query("SELECT * FROM usuarios where id = '$usuario'");
-				$res_usu = $query_usu->fetchAll(PDO::FETCH_ASSOC);
-				$nome_usu = $res_usu[0]['nome'];
-
-
-				$query_usu = $pdo->query("SELECT * FROM fornecedores where id = '$fornecedor'");
-				$res_usu = $query_usu->fetchAll(PDO::FETCH_ASSOC);
-				$nome_forn = $res_usu[0]['nome'];
+				if($saldo < 0){
+					$classeSaldo = 'text-danger';
+				}else{
+					$classeSaldo = 'text-success';
+				}
 				
 		?>
-		<tr>		
-			<td><?php echo $total ?> </td>
-			<td><?php echo $data ?> </td>
-			<td><?php echo $nome_usu ?> </td>
-			<td><?php echo $nome_forn ?> </td>
-			<td><?php echo $pago ?> </td>
+		<tr>	
+			<td><span class="<?php echo $classes ?>"><?php echo $res[$i]['tipo'] ?></span></td>	
+			<td><?php echo $res[$i]['descricao'] ?> </td>
+			<td>R$ <?php echo number_format($res[$i]['valor'], 2, ',','.'); ?> </td>
+			<td><?php echo $nome_usuario ?> </td>
+			<td><?php echo implode('/', array_reverse(explode('-', $res[$i]['data']))); ?> </td>
 		</tr>
 		<?php } ?>
 	</table>
 	<hr>
-	<div class="row margem-superior">
-		<div class="col-md-12">
-			<div class="col-md-12">
-				<b>Total R$: <?php echo $saldoF ?></b>
-			</div>
+	<div class="row">
+		<div class="col-sm-8 esquerda">
+			<span class=""> <b> Entradas : </b> <span class="text-success">R$ <?php echo $entradasF ?></span> </span>
+			<span class=""> <b> Saídas : </b> <span class="text-danger">R$ <?php echo $saidasF ?></span> </span>
+		</div>
+		<div class="col-sm-4 direita" align="right">	
+			<span class=""> <b> Saldo Total :</b><span class="<?php echo $classeSaldo ?>"> R$ <?php echo $saldoF ?></span>  </span>
 		</div>
 	</div>
 	<hr>
