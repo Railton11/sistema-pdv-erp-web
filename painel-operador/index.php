@@ -6,20 +6,6 @@ require_once("verificar-permissao.php");
 
 // VARIAVEIS DO MENU ADMINISTRATIVO
 $menu1 = "home";
-$menu2 = "usuarios";
-$menu3 = "fornecedores";
-$menu4 = "categorias";
-$menu5 = "produtos";
-$menu6 = "compras";
-$menu7 = "contas_pagar";
-$menu8 = "contas_receber";
-$menu9 = "movimentacoes";
-$menu10 = "contas_pagar_vencidas";
-$menu11 = "contas_pagar_hoje";
-$menu12 = "contas_receber_vencidas";
-$menu13 = "caixas";
-$menu14 = "forma_pgtos";
-
 
 // RECUPERAR DADOS DO USUÁRIO
 $query = $pdo->query("SELECT * from usuarios WHERE id = '$_SESSION[id_usuario]'");
@@ -39,7 +25,7 @@ $id_usu = $res[0]['id'];
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Painel Administrativo</title>
+        <title>Painel Operador</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -58,28 +44,25 @@ $id_usu = $res[0]['id'];
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
+                            <!--<li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="index.php?pagina=<?php echo $menu1 ?>">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="index.php?pagina=<?php echo $menu2 ?>">Usuários</a>
+                                <a class="nav-link" href="index.php?pagina=<?php //echo $menu2 ?>">Usuários</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="index.php?pagina=<?php echo $menu3 ?>">Fornecedores</a>
+                                <a class="nav-link" href="index.php?pagina=<?php //echo $menu3 ?>">Fornecedores</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="index.php?pagina=<?php echo $menu13 ?>">Caixas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.php?pagina=<?php echo $menu14 ?>">Forma pagamentos</a>
+                                <a class="nav-link" href="index.php?pagina=<?php //echo $menu13 ?>">Caixas</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Produtos
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu5 ?>">Cadastro de produtos</a></li>
-                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu4 ?>">Cadastro de categorias</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php //echo $menu5 ?>">Cadastro de produtos</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php //echo $menu4 ?>">Cadastro de categorias</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -87,9 +70,9 @@ $id_usu = $res[0]['id'];
                                     Financeiro
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu9 ?>">Movimentações</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php //echo $menu9 ?>">Movimentações</a></li>
                                     <li><a class="dropdown-item" href="#">Lista de vendas</a></li>
-                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu6 ?>">Lista de compras</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php //echo $menu6 ?>">Lista de compras</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -97,11 +80,11 @@ $id_usu = $res[0]['id'];
                                     Contas
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu7 ?>">Contas pagar</a></li>
-                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu8 ?>">Contas receber</a></li>
-                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu11 ?>">Pagar hoje</a></li>
-                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu10 ?>">Pagar contas vencidas</a></li>
-                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu12 ?>">Receber contas vencidas</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php //echo $menu7 ?>">Contas pagar</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php //echo $menu8 ?>">Contas receber</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php //echo $menu11 ?>">Pagar hoje</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php //echo $menu10 ?>">Pagar contas vencidas</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php //echo $menu12 ?>">Receber contas vencidas</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -116,7 +99,7 @@ $id_usu = $res[0]['id'];
                                     <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalRelMov" href="">Relatório de movimentações</a></li>
                                     <li><a class="dropdown-item" href="#">Relatório do caixa</a></li>
                                 </ul>
-                            </li>
+                            </li>-->
                         </ul>
                         <form class="d-flex">
                             <div class="btn-group">
@@ -141,45 +124,6 @@ $id_usu = $res[0]['id'];
                 
                 if(@$_GET['pagina'] == $menu1){
                     require_once($menu1. ".php");
-                }
-                else if(@$_GET['pagina'] == $menu2){
-                    require_once($menu2. ".php");
-                }
-                else if(@$_GET['pagina'] == $menu3){
-                    require_once($menu3. ".php");
-                }
-                else if(@$_GET['pagina'] == $menu4){
-                    require_once($menu4. ".php");
-                }
-                else if(@$_GET['pagina'] == $menu5){
-                    require_once($menu5. ".php");
-                }
-                else if(@$_GET['pagina'] == $menu6){
-                    require_once($menu6. ".php");
-                }
-                else if(@$_GET['pagina'] == $menu7){
-                    require_once($menu7. ".php");
-                }
-                else if(@$_GET['pagina'] == $menu8){
-                    require_once($menu8. ".php");
-                }
-                else if(@$_GET['pagina'] == $menu9){
-                    require_once($menu9. ".php");
-                }
-                else if(@$_GET['pagina'] == $menu10){
-                    require_once($menu10. ".php");
-                }
-                else if(@$_GET['pagina'] == $menu11){
-                    require_once($menu11. ".php");
-                }
-                else if(@$_GET['pagina'] == $menu12){
-                    require_once($menu12. ".php");
-                }
-                else if(@$_GET['pagina'] == $menu13){
-                    require_once($menu13. ".php");
-                }
-                else if(@$_GET['pagina'] == $menu14){
-                    require_once($menu14. ".php");
                 }
                 else{
                     require_once($menu1. ".php");
@@ -241,8 +185,6 @@ $id_usu = $res[0]['id'];
                 </div>
             </div>
         </div>
-
-        
 
         <!--  Modal Rel Compras-->
         <div class="modal fade" id="ModalRelCompras" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

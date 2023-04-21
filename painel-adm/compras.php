@@ -17,13 +17,13 @@ require_once("verificar-permissao.php");
     <table id="example" class="table table-hover my-2">
             <thead>
                 <tr>
-                    <th>Pago</th>
+                    <!--<th>Pago</th>-->
                     <th>Total</th>
                     <th>Data</th>
                     <th>Usuário</th>
                     <th>Fornecedor</th>
                     <th>Tel Fornecedor</th>
-                    <th>Ações</th>
+                    <!--<th>Ações</th>-->
                 </tr>
             </thead>
             <tbody>
@@ -52,17 +52,17 @@ require_once("verificar-permissao.php");
 
                 ?>
                 <tr>
-                    <td><?php echo $res[$i]["pago"] ?></td>
+                    <!--<td><?php //echo $res[$i]["pago"] ?></td>-->
                     <td>R$ <?php echo number_format($res[$i]["total"], 2, ',', '.'); ?></td>
                     <td><?php echo implode('/', array_reverse(explode('-', $res[$i]["data"]))); ?></td>
                     <td><?php echo $nome_usuario ?></td>
                     <td><?php echo $nome_forn ?></td>
                     <td><?php echo $tel_forn ?></td>
-                    <td>
-                        <?php if($res[$i]['pago'] != 'Sim'){ ?>
-                        <a href="index.php?pagina=<?php echo $pag ?>&funcao=deletar&id=<?php echo $res[$i]['id'] ?>" title="Excluir produto" style="text-decoration: none;">
+                    <!--<td>
+                        <?php //if($res[$i]['pago'] != 'Sim'){ ?>
+                        <a href="index.php?pagina=<?php //echo $pag ?>&funcao=deletar&id=<?php //echo $res[$i]['id'] ?>" title="Excluir produto" style="text-decoration: none;">
                             <i class="bi bi-trash3 text-danger"></i></a>
-                        <?php } ?></td>
+                        <?php //} ?></td>-->
                 </tr>
                 <?php } ?>
             </tbody>
