@@ -244,12 +244,7 @@ if($desconto_porcentagem == "Sim"){
             
             success:function(result){
               $('#mensagem-venda').text("");
-              if(result.trim() === "Venda Salva!"){
-          
-                $('#btn-fechar-venda').click();
-                window.location = "pdv.php";
-                return;
-              }
+              
               if(result.trim() === "Não é possível efetuar uma venda sem itens!"){
                 $('#mensagem-venda').addClass('text-danger')
                 $('#mensagem-venda').text(result)
@@ -257,6 +252,15 @@ if($desconto_porcentagem == "Sim"){
                 return;
               }
               var array = result.split("&-/z");
+
+              if(array[0] === "Venda Salva!"){
+          
+                $('#btn-fechar-venda').click();
+          
+                window.location = "comprovante_class.php?id=" + array[1];
+                return;
+              }
+
               if(array.length == 2){
                 var ms1 = array[0];
                 var ms2 = array[1];

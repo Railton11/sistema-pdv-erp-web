@@ -36,10 +36,10 @@ if($forma_pgto_input != ""){
 	$total_compra = str_replace(',', '.', $total_compra);
 
 	
-	if($total_compra <= 0){
-		echo 'Não é possível efetuar uma venda sem itens!';
-		exit();
-	}
+	//if($total_compra <= 0){
+		//echo 'Não é possível efetuar uma venda sem itens!';
+		//exit();
+	//}
 
 	if($valor_recebido == ""){
 		$valor_recebido = $total_compra;
@@ -70,7 +70,7 @@ if($forma_pgto_input != ""){
 	//RELACIONAR OS ITENS DA VENDA COM A NOVA VENDA
 	$query_con = $pdo->query("UPDATE itens_venda SET venda = '$id_venda' WHERE usuario = '$id_usuario' and venda = 0");
 
-	echo 'Venda Salva!';
+	echo 'Venda Salva!&-/z'.$id_venda;
 	exit();
 }
 

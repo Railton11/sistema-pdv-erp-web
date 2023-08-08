@@ -135,6 +135,36 @@ if($total_reg > 0){
 	}
 }
 
+$totalVendasM = 0;
+$query = $pdo->query("SELECT * from vendas where data >= 'dataInicioMes' and data <= curDate() and status = 'Concluída'");
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$total_reg = @count($res);
+if($total_reg > 0){ 
+
+	for($i=0; $i < $total_reg; $i++){
+		foreach ($res[$i] as $key => $value){	}
+
+		$totalVendasM += $res[$i]['valor'];
+		$totalVendasMesF = number_format($totalVendasM, 2, ',', '.');
+	}
+}
+
+$query = $pdo->query("SELECT * from produtos");
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$totalProdutos = @count($res);
+
+$query = $pdo->query("SELECT * from fornecedores");
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$totalFornecedores = @count($res);
+
+$query = $pdo->query("SELECT * from produtos where estoque <= $nivel_estoque_minimo");
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$totalEstoqueBaixo = @count($res);
+
+$query = $pdo->query("SELECT * from vendas where data = curDate()");
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$totalVendasDia = @count($res);
+
 ?>
 <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
@@ -225,8 +255,6 @@ if($total_reg > 0){
 
 		</div>
 
-
-
 		<div class="row mb-4">
 
 			<div class="col-xl-3 col-sm-6 col-12"> 
@@ -305,7 +333,83 @@ if($total_reg > 0){
 
 		</div>
 
+		<div class="row mb-4">
 
+			<div class="col-xl-3 col-sm-6 col-12"> 
+				<div class="card">
+					<div class="card-content">
+						<div class="card-body">
+							<div class="row">
+								<div class="align-self-center col-4">
+									<i class="bi bi-bar-chart-line fs-1 float-start"></i>
+								</div>
+								<div class="col-8 text-end">
+									<h3><?php echo @$totalProdutos ?></h3>
+									<span>Total de produtos</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xl-3 col-sm-6 col-12"> 
+				<div class="card">
+					<div class="card-content">
+						<div class="card-body">
+							<div class="row">
+								<div class="align-self-center col-4">
+									<i class="bi bi-bar-chart-line fs-1 float-start"></i>
+								</div>
+								<div class="col-8 text-end">
+									<h3><?php echo @$totalEstoqueBaixo ?></h3>
+									<span>Estoque baixo</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-xl-3 col-sm-6 col-12"> 
+				<div class="card">
+					<div class="card-content">
+						<div class="card-body">
+							<div class="row">
+								<div class="align-self-center col-4">
+									<i class="bi bi-bar-chart-line fs-1 float-start"></i>
+								</div>
+								<div class="col-8 text-end">
+									<h3><?php echo @$totalFornecedores ?></h3>
+									<span>Total de fornecedores</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-xl-3 col-sm-6 col-12"> 
+				<div class="card">
+					<div class="card-content">
+						<div class="card-body">
+							<div class="row">
+								<div class="align-self-center col-4">
+									<i class="bi bi-cash-stack fs-1 float-start"></i>
+								</div>
+								<div class="col-8 text-end">
+									<h3><?php echo @$totalVendasDia ?></h3>
+									<span>Vendas do dia</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
 
 	</section>
 
@@ -392,14 +496,14 @@ if($total_reg > 0){
 						<div class="card-body cleartfix">
 							<div class="row media align-items-stretch">
 								<div class="align-self-center col-1">
-									<i class="bi-pencil-square text-primary fs-1 mr-2"></i>
+									<i class="bi bi-bar-chart-line text-primary fs-1 mr-2"></i>
 								</div>
 								<div class="media-body col-6">
 									<h4>Total de vendas</h4>
 									<span>Vendas do mês</span>
 								</div>
 								<div class="text-end col-5">
-									<h2>R$ 18,000</h2>
+									<h2>R$ <?php echo $totalVendasM ?></h2>
 								</div>
 							</div>
 						</div>
@@ -416,52 +520,87 @@ if($total_reg > 0){
 			</div>
 			
 			<style type="text/css">
-						#principal{
-				width:500px;
-				height: 100%;
-				margin-left:10px;
-				font-family:Verdana, Helvetica, sans-serif;
-				font-size:14px;
 
-			}
-			#barra{
-				margin: 0 2px;
-				vertical-align: bottom;
-				display: inline-block;
-				
+				#principal{
+					width:100%;
+					height: 100%;
+					margin-left:10px;
+					font-family:Verdana, Helvetica, sans-serif;
+					font-size:14px;
 
-			}
-			.cor1, .cor2, .cor3, .cor4{
-				color:#FFF;
-				padding: 5px;
-			}
-			.cor1{ background-color: #FF0000; }
-			.cor2{ background-color: #0000FF; }
-			.cor3{ background-color: #FF6600; }
-			.cor4{ background-color: #009933; }
-					</style>
+				}
+				#barra{
+					margin: 0 2px;
+					vertical-align: bottom;
+					display: inline-block;
+					padding:5px;
+					text-align:center;
 
+				}
+				.cor1, .cor2, .cor3, .cor4, .cor5, .cor6, .cor7, .cor8, .cor9, .cor10, .cor11, .cor12{
+					color:#FFF;
+					padding: 5px;
+				}
+				.cor1{ background-color: #000000; }
+				.cor2{ background-color: #000000; }
+				.cor3{ background-color: #000000; }
+				.cor4{ background-color: #000000; }
+				.cor5{ background-color: #000000; }
+				.cor6{ background-color: #000000; }
+				.cor7{ background-color: #000000; }
+				.cor8{ background-color: #000000; }
+				.cor9{ background-color: #000000; }
+				.cor10{ background-color: #000000; }
+				.cor11{ background-color: #000000; }
+				.cor12{ background-color: #000000; }
+			</style>
 
-						<?php
-			// definindo porcentagem
-			$height1 = '58px';
-			$height2 = '89px';
-			$height3 = '50px';
-			$height4 = '25px';
-			$total  = 4; // total de barras
-			?>
 			<div id="principal">
-				<p>Vendas no ano</p>
+    			<p>Vendas no Ano de <?php echo $ano_atual ?></p>
 				<?php
-				for($i=1;$i <= $total;$i++){
-					$height = ${'height' . $i};
-					?>
+				// definindo porcentagem
+				//BUSCAR O TOTAL DE VENDAS POR MES NO ANO
+				$total  = 12; // total de barras
+				for($i=1; $i<13; $i++){
+		
+
+				$dataMesInicio = $ano_atual."-".$i."-01";
+				$dataMesFinal = $ano_atual."-".$i."-31";
+				$totalVenM = 0;
+
+				$query = $pdo->query("SELECT * from vendas where data >= '$dataMesInicio' and data <= '$dataMesFinal' and status = 'Concluída'");
+				$res = $query->fetchAll(PDO::FETCH_ASSOC);
+				$total_vendas_mes = @count($res);
+				$totalValor = 0;
+				$totalValorF = number_format($totalValor, 2, ',', '.');
+					for($i2=0; $i2 < $total_vendas_mes; $i2++){
+						foreach ($res[$i2] as $key => $value){	}
+
+						
+							$totalValor += $res[$i2]['valor'];
+							$totalValorF = number_format($totalValor, 2, ',', '.');
+							$altura_barra = $totalValor / 100;
+
+						}
+
+
+						if($i < 10){
+							$texto = '0'.$i .'/'.$ano_atual;
+						}else{
+							$texto = $i .'/'.$ano_atual;
+						}
+						
+							
+						?>
+
+
 					<div id="barra">
-						<div class="cor<?php echo $i ?>" style="height:<?php echo $height ?>"> <?php echo $height ?> </div>
-					</div>
-				<?php } ?>
+							<div class="cor<?php echo $i ?>" style="height:<?php echo $altura_barra + 25 ?>px"> <?php echo $totalValorF ?> </div>
+							<div><?php echo $texto ?></div>
+						</div>
+						
+				<?php }?>
+
 			</div>
 		</section>
-
-	</section>
 </div>

@@ -19,6 +19,9 @@ $menu11 = "contas_pagar_hoje";
 $menu12 = "contas_receber_vencidas";
 $menu13 = "caixas";
 $menu14 = "forma_pgtos";
+$menu15 = "vendas";
+$menu16 = "aberturas";
+$menu17 = "estoque";
 
 
 // RECUPERAR DADOS DO USUÁRIO
@@ -67,17 +70,12 @@ $id_usu = $res[0]['id'];
                             <li class="nav-item">
                                 <a class="nav-link" href="index.php?pagina=<?php echo $menu3 ?>">Fornecedores</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.php?pagina=<?php echo $menu13 ?>">Caixas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.php?pagina=<?php echo $menu14 ?>">Forma pagamentos</a>
-                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Produtos
                                 </a>
                                 <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu17 ?>">Estoque</a></li>
                                     <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu5 ?>">Cadastro de produtos</a></li>
                                     <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu4 ?>">Cadastro de categorias</a></li>
                                 </ul>
@@ -88,8 +86,8 @@ $id_usu = $res[0]['id'];
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu9 ?>">Movimentações</a></li>
-                                    <li><a class="dropdown-item" href="#">Lista de vendas</a></li>
                                     <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu6 ?>">Lista de compras</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu14 ?>">Forma pagamentos</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -106,6 +104,16 @@ $id_usu = $res[0]['id'];
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Vendas / Caixas
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu13 ?>">Caixas</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu15 ?>">Vendas</a></li>
+                                    <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu16 ?>">Caixa Aberto / Fechados</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Relatórios
                                 </a>
                                 <ul class="dropdown-menu">
@@ -114,7 +122,7 @@ $id_usu = $res[0]['id'];
                                     <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalRelContas" href="">Relatório de contas pagar</a></li>
                                     <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalRelContasRec" href="">Relatório de contas receber</a></li>
                                     <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalRelMov" href="">Relatório de movimentações</a></li>
-                                    <li><a class="dropdown-item" href="#">Relatório do caixa</a></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalRelVendas" href="">Relatório de vendas</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -180,6 +188,15 @@ $id_usu = $res[0]['id'];
                 }
                 else if(@$_GET['pagina'] == $menu14){
                     require_once($menu14. ".php");
+                }
+                else if(@$_GET['pagina'] == $menu15){
+                    require_once($menu15. ".php");
+                }
+                else if(@$_GET['pagina'] == $menu16){
+                    require_once($menu16. ".php");
+                }
+                else if(@$_GET['pagina'] == $menu17){
+                    require_once($menu17. ".php");
                 }
                 else{
                     require_once($menu1. ".php");
@@ -277,6 +294,56 @@ $id_usu = $res[0]['id'];
                                             <option value="">Todas</option>
                                             <option value="Sim">Sim</option>
                                             <option value="Não">Não</option>
+                                        
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>     
+
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="submit" class="btn btn-primary">Gerar Relatório</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--  Modal Rel Vendas-->
+        <div class="modal fade" id="ModalRelVendas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Vendas</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="../rel/relVendas_class.php" method="POST" target="_blank">
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label >Data Inicial</label>
+                                        <input value="<?php echo date('Y-m-d') ?>" type="date" class="form-control"  name="dataInicial_venda" >
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+                                        <label >Data Final</label>
+                                        <input value="<?php echo date('Y-m-d') ?>" type="date" class="form-control"  name="dataFinal_venda" >
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label >Status</label>
+                                        <select class="form-select" name="status_venda">
+                                            <option value="">Todas</option>
+                                            <option value="Concluída">Concluída</option>
+                                            <option value="Cancelada">Cancelada</option>
                                         
                                         </select>
                                     </div>

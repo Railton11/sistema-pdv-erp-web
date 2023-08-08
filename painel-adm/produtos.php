@@ -73,7 +73,10 @@ require_once("verificar-permissao.php");
                             <i class="bi bi-three-dots text-dark mx-1"></i>
                         </a>
                         <a href="#" onclick="comprarProdutos('<?php echo $res[$i]['id'] ?>')" title="Comprar" style="text-decoration: none;">
-                            <i class="bi bi-cash-coin text-success"></i>
+                            <i class="bi bi-cash-coin text-success mx-1"></i>
+                        </a>
+                        <a target="_blank" href="../rel/barras_class.php?codigo=<?php echo $res[$i]['codigo']?>" title="Gerar etiquetas" style="text-decoration: none;">
+                            <i class="bi bi-upc-scan text-dark"></i>
                         </a>
                     </td>
                 </tr>
